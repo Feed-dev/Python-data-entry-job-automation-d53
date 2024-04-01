@@ -7,7 +7,7 @@ from scrapeWebsite import scrape_zillow
 
 
 def fill_google_form(data):
-    form_url = "https://docs.google.com/forms/d/e/1FAIpQLSc5UQiiGO11tUTnDYB1NcuQJB9WQIzDWfgFjwbYVoTsY0MUng/viewform?usp=sf_link"
+    form_url = "https://forms.gle/LkgftVszNN6Wbj1j6"
 
     # Setup Chrome and open the form
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -16,32 +16,32 @@ def fill_google_form(data):
         driver.get(form_url)
         time.sleep(2)  # Adjust based on your internet speed
 
-        # Fill the address
+        # Find and fill the address field
         address_field = driver.find_element(By.XPATH,
                                             "/html/body/div/div[3]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div/div[1]/input")
         address_field.send_keys(entry["address"])
 
-        # Fill the price
+        # Find and fill the price field
         price_field = driver.find_element(By.XPATH,
                                           "/html/body/div/div[3]/form/div[2]/div/div[2]/div[1]/div/div/div[2]/div/div[1]/div/div[1]/input")
         price_field.send_keys(entry["price"])
 
-        # Fill the link
+        # Find and fill the link field
         link_field = driver.find_element(By.XPATH,
                                          "/html/body/div/div[3]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input")
         link_field.send_keys(entry["link"])
 
-        # Click the submit button
+        # Submit the form
         submit_button = driver.find_element(By.XPATH, "/html/body/div/div[3]/form/div[2]/div/div[3]/div[1]/div[1]/div")
         submit_button.click()
 
-        time.sleep(1)  # Wait a bit for form to submit
+        # Wait a second before submitting the next form
+        time.sleep(1)
 
-    # Close the browser once all forms are submitted
+    # Close the browser after submitting all forms
     driver.quit()
 
 
 # Assuming properties_data is the list of dictionaries containing the scraped data
-properties_data = scrape_zillow()  # Make sure to have this function from the previous step
+properties_data = scrape_zillow()  # Ensure this function is defined as above
 fill_google_form(properties_data)
-
